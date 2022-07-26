@@ -45,8 +45,29 @@ def get_results(db_cursor):
 @app.route("/home")
 def home():
     # filename = os.path.join(app.static_folder, 'data/data.json')
-    with open("data/data.json","r") as file:
+    with open("jumiaDataScraping.json","r") as file:
         data = json.load(file)
+
+    priceList = []
+
+    char_to_replace = {
+                    ','  : '',
+                    ' '  : '',
+                    '.00': '',
+                    'Dhs': ''}
+
+    def getPriceFromJumia(arg):
+        for key, value in char_to_replace.items():
+            arg = arg.replace(key, value)
+        return float(arg)
+
+    for i in data['iPhone 13 pro max']['price']:
+        i = getPriceFromJumia(i)
+        priceList.append(i)
+
+    # priceList = list(map(lambda x: x.replace(',', ''), priceList))
+
+    prix = max(priceList)
 
     cursor = mysql.connection.cursor()
     cursor.execute('select * from courses')
@@ -59,7 +80,12 @@ def home():
     # lessons = cursor.fetchall()
     cursor.close()
 
-    return render_template("home.html", title="BMS SCRIPER" ,lessons=lessons, courses=courses)
+    return render_template("home.html", title="BMS SCRIPER" ,
+    lessons=lessons, courses=courses , 
+    data = data['iPhone 13 pro max'],
+    price = priceList,
+    prix = prix
+    )
 
 @app.route("/about")
 def about():

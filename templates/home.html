@@ -89,11 +89,20 @@
         <h2 class="text-gradient text-primary text-center">Compare Features</h2>
         <p class="lead mb-5">Join the world&#39;s largest developer community</p>
       </div>
+      <form role="form text-start" method="POST" action="">
+        <div class="input-group input-group-outline mb-3">
+            <label class="form-label">Product Name</label>
+            <input type="text" class="form-control" name="product_name">
+    </div>
+    </form>
       <div class="col-lg-10">
+
         <div class="table-responsive">
           
           <table class="table table-pricing">
+            <!-- button group -->
             <tr>
+              
               <span class="border-bottom-0"></span>
               <span class="text-center align-items-center border-bottom-0">
                 <a href="javascript:;" class="btn btn-dark mt-3">Choose Plan</a>
@@ -122,6 +131,7 @@
               </tr>
             </thead>
             <tbody>
+              {% for i in price %}
               <tr>
                 <td>
                     <div class="d-flex px-2">
@@ -134,7 +144,7 @@
                     </div>
                   </td>
                 <td class="py-3">
-                  <span class="text-xs">Community support</span>
+                  <span class="text-xs">{{prix}}{{price}}</span>
                 </td>
                 <td class="text-center py-3">
                   <i class="fas fa-check text-success text-xs"></i>
@@ -146,55 +156,8 @@
                   <i class="fas fa-check text-success text-xs"></i>
                 </td>
               </tr>
-              <tr>
-                <td>
-                    <div class="d-flex px-2">
-                      <div>
-                        <img src="../static/assets/img/jumialogo.jpeg" class="avatar avatar-sm rounded-circle me-2">
-                      </div>
-                      <div class="my-auto">
-                        <h6 class="mb-0 text-xs">Invision</h6>
-                      </div>
-                    </div>
-                  </td>
-                <td class="py-3">
-                    <span class="text-xs">100+ Example Pages</span>
-                </td>
-                <td class="text-center py-3">
-                  <i class="fas fa-check text-success text-xs"></i>
-                </td>
-                <td class="text-center py-3">
-                  <i class="fas fa-check text-success text-xs"></i>
-                </td>
-                <td class="text-center py-3">
-                  <i class="fas fa-check text-success text-xs"></i>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                    <div class="d-flex px-2">
-                      <div>
-                        <img src="../static/assets/img/jumialogo.jpeg" class="avatar avatar-sm rounded-circle me-2">
-                      </div>
-                      <div class="my-auto">
-                        <h6 class="mb-0 text-xs">Invision</h6>
-                      </div>
-                    </div>
-                  </td>
-                <td class="py-3">
-                  <span class="text-xs">50+ Section Examples</span>
-                </td>
-                <td class="text-center py-3">
-                  <i class="fas fa-check text-success text-xs"></i>
-                </td>
-                <td class="text-center py-3">
-                  <i class="fas fa-check text-success text-xs"></i>
-                </td>
-                <td class="text-center py-3">
-                  <i class="fas fa-check text-success text-xs"></i>
-                </td>
-              </tr>
-             
+              {% endfor%}
+               
             </tbody>
           </table>
         </div>

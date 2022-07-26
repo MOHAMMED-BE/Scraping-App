@@ -45,7 +45,7 @@ class GetPriceSpider(scrapy.Spider):
 
         title = products.css("div.s-card-container > div.a-section div.a-section > div.a-section > h2 > a > span.a-text-normal::text").getall()
         price = products.css("div.a-section span.a-price span.a-price-whole::text").getall()
-        
+        # title = title.replace(',','')
         data[self.query] = {
             'title':title,
             'price':price
