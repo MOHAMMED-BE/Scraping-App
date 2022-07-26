@@ -1,0 +1,72 @@
+{
+    "lessons": [
+        {
+            "title": "Request Library Course",
+            "course": "Python",
+            "author": "Omar",
+            "thumbnail": "thumbnail.jpg"
+        },
+        {
+            "title": "Request Library Course",
+            "course": "Python",
+            "author": "Omar",
+            "thumbnail": "thumbnail.jpg"
+        },
+        {
+            "title": "Request Library Course",
+            "course": "Python",
+            "author": "Omar",
+            "thumbnail": "thumbnail.jpg"
+        },
+        {
+            "title": "Request Library Course",
+            "course": "Python",
+            "author": "Omar",
+            "thumbnail": "thumbnail.jpg"
+        },
+        {
+            "title": "Request Library Course",
+            "course": "Python",
+            "author": "Omar",
+            "thumbnail": "thumbnail.jpg"
+        },
+        {
+            "title": "Request Library Course",
+            "course": "Python",
+            "author": "Omar",
+            "thumbnail": "thumbnail.jpg"
+        }
+    ],
+    "courses": [
+        {
+            "name": "Python",
+            "icon": "python.svg",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque quidem nihil dolor officiis at magni!"
+        },
+        {
+            "name": "Data Analysis",
+            "icon": "analysis.png",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque quidem nihil dolor officiis at magni!"
+        },
+        {
+            "name": "Machine Learning",
+            "icon": "machine-learning.png",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque quidem nihil dolor officiis at magni!"
+        },
+        {
+            "name": "Web Design",
+            "icon": "web.png",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque quidem nihil dolor officiis at magni!"
+        },
+        {
+            "name": "Blockchain",
+            "icon": "blockchain.png",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque quidem nihil dolor officiis at magni!"
+        },
+        {
+            "name": "Tips & Tricks",
+            "icon": "idea.png",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque quidem nihil dolor officiis at magni!"
+        }
+    ]
+}
