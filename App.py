@@ -5,6 +5,7 @@ from email.policy import default
 import json
 import os
 import subprocess
+from turtle import title
 import MySQLdb
 from colorama import Cursor
 from flask import Flask, redirect,render_template,url_for, request,flash
@@ -192,10 +193,11 @@ def scrape():
 
     flask_env = get_flask_env()
     command = []
+    cmd = []
     # the command to start app.py, would be: flask run --host 0.0.0.
     # command.append(python_command)
     
-    i = 1
+    i = 0
 
     if i == 0:
         # command.append("cd")
@@ -207,17 +209,26 @@ def scrape():
         command.append("jumiaSpider.py")
         monitor = subprocess.Popen(command, env=flask_env)
         atexit.register(teardown, monitor)
-    else :
         
-        command.append("scrapy")
-        command.append("runspider")
-        command.append("amazonSpider.py")
-        monitor = subprocess.Popen(command, env=flask_env)
-        atexit.register(teardown, monitor)
-
-    return redirect(url_for('registration'))
+        cmd.append("scrapy")
+        cmd.append("runspider")
+        cmd.append("amazonSpider.py")
+        cmdmonitor = subprocess.Popen(cmd, env=flask_env)
+        atexit.register(teardown, cmdmonitor)
 
 
+    # return redirect(url_for('registration'))
+
+    return render_template('progressbar.html'), {"Refresh": "3; url=home"}
+
+
+
+
+@app.route('/pro')
+def pro():
+
+
+    return render_template('progressbar.html' , title='progress')
 
 
 

@@ -1,3 +1,73 @@
 .card.card-plain {
     max-width: 50rem !important;
 }
+
+.btn-Scraping{
+  letter-spacing: 1px !important;
+  /* text-transform: capitalize !important; */
+}
+
+/* body {
+    display: grid;
+    height: 100vh; 
+    place-items: center;
+    background: #243b47;
+  } */
+/*   
+  .dashboard {
+    display: flex;
+    display: grid;
+    height: 100vh; 
+    place-items: center;
+    background: #243b47;
+    
+
+  }
+  
+  svg {
+    width: 114px;
+    height: 114px;
+    margin: 1em;
+  }
+  
+  .bg {
+    fill: none;
+    stroke-width: 10px;
+    stroke: #1A2C34;
+  }
+  
+  [class^="meter-"] {
+    fill: none;
+    stroke-width: 10px;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    
+  }
+  
+  .meter-2 {
+    stroke: lime;
+    stroke-dasharray: 360;
+    stroke-dashoffset: 160;
+    animation: progress-2 5s ease-out;
+  }
+  
+  
+  @keyframes progress-2 {
+    from {
+      stroke-dashoffset: 360;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  } */
+
+
+
+
+
+
+  /* ----------------------------------------- */
+
+
+  
