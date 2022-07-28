@@ -89,28 +89,46 @@
         <h2 class="text-gradient text-primary text-center">Compare Features</h2>
         <p class="lead mb-5">Join the world&#39;s largest developer community</p>
       </div>
-      <form role="form text-start" method="POST" action="">
+      <form role="form text-start" method="post" action="{{url_for('scrape')}}">
+        {{form.hidden_tag()}}
         <div class="input-group input-group-outline mb-3">
-            <label class="form-label">Product Name</label>
-            <input type="text" class="form-control" name="product_name">
-    </div>
-    </form>
+          <!-- {{form.product_name.label(class='form-label')}} -->
+          <label class="form-label">Product Name</label>
+          {% if form.product_name.errors%} 
+          {{ form.product_name(class='form-control form-control-lg is-invalid')}} 
+          <div class="invalid-feedback">
+          {% for error in form.product_name.errors %} 
+              <span>{{error}}</span>
+          {% endfor %} 
+
+          </div>
+          {% else %} 
+          {{ form.product_name(class='form-control form-control-lg')}} 
+          {% endif %}
+          <!-- <label class="form-label">First Name</label>
+          <input type="text" class="form-control"> -->
+      </div>
+      {{form.submit(class='btn bg-gradient-primary mt-3 btn-Scraping')}}
+    <!-- <button  class="btn bg-gradient-primary mt-3 btn-Scraping" name="btn-Scraping">Start Scraping Data</button> -->
+  </form>
       <div class="col-lg-10">
 
         <div class="table-responsive">
           
           <table class="table table-pricing">
             <!-- button group -->
-            <tr>
+            <!-- <tr>
               
               <span class="border-bottom-0"></span>
               <span class="text-center align-items-center border-bottom-0">
-                <a href="javascript:;" class="btn bg-gradient-primary mt-3 btn-Scraping">Start Scraping Data</a>
+                <form action="{{url_for('scrape')}}" method="POST">
+                  <button  class="btn bg-gradient-primary mt-3 btn-Scraping" name="btn-Scraping">Start Scraping Data</button>
+                </form>
               </span>
               <span class="text-center align-items-center border-bottom-0">
                 <a href="javascript:;" class="btn bg-gradient-primary mt-3">Choose Plan</a>
               </span>
-            </tr>
+            </tr> -->
             <thead class="text-light text-center">
               <tr>
                 <th class="ps-2">

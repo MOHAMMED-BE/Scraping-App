@@ -1,23 +1,26 @@
 # from crypt import methods
 import atexit
-from distutils.log import debug
-from email.policy import default
+# from concurrent.futures import thread
+from datetime import datetime
+# from distutils.log import debug
+# from email.policy import default
 import json
 import os
 import subprocess
+# import threading
 from turtle import title
 import MySQLdb
-from colorama import Cursor
-from flask import Flask, redirect,render_template,url_for, request,flash
+# from colorama import Cursor
+from flask import Flask, redirect,render_template, session,url_for, request,flash,copy_current_request_context
+# import flask
 from flask_mysqldb import MySQL
 from classes.dotDict import dotdict
-from forms import LoginForm, RegistrationForm
-from flask_wtf import FlaskForm
-from scrapy.crawler import CrawlerProcess
-
-
-
-
+from forms import LoginForm, RegistrationForm,ScrapingForm
+# from flask_wtf import FlaskForm
+# from scrapy.crawler import CrawlerProcess
+from  flask_session import Session
+import numpy as np
+from jumiaSpider import *
 app = Flask(__name__)
 
 
@@ -25,7 +28,11 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = '' #nfakira
 app.config['MYSQL_DB'] = 'FlaskAppDB'
- 
+
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+
+Session(app)
 mysql = MySQL(app)
 
 
@@ -45,6 +52,8 @@ def get_results(db_cursor):
 @app.route("/")
 @app.route("/home")
 def home():
+    form = ScrapingForm()
+
     # filename = os.path.join(app.static_folder, 'data/data.json')
     with open("jumiaDataScraping.json","r") as file:
         data = json.load(file)
@@ -61,8 +70,8 @@ def home():
         for key, value in char_to_replace.items():
             arg = arg.replace(key, value)
         return float(arg)
-
-    for i in data['iPhone 13 pro max']['price']:
+    prod = getProduct()
+    for i in data[prod]['price']:
         i = getPriceFromJumia(i)
         priceList.append(i)
 
@@ -83,9 +92,9 @@ def home():
 
     return render_template("home.html", title="BMS SCRIPER" ,
     lessons=lessons, courses=courses , 
-    data = data['iPhone 13 pro max'],
+    data = data[prod],
     price = priceList,
-    prix = prix
+    prix = prix,form=form
     )
 
 @app.route("/about")
@@ -173,8 +182,8 @@ def teardown(process_handle):
     process_handle.terminate() #kill the sub process clean
     process_handle.wait()# wait for graceful exit.
 
-
-@app.route('/scrape')
+# product_name = ""
+@app.route('/scrape' , methods=['POST','GET'])
 def scrape():
 
     # from jumia import jumia
@@ -188,7 +197,15 @@ def scrape():
 
     # jumia.run()
 
-    varx = 'redmi note 10 pro'
+    # varx = 'redmi note 10 pro'
+
+    # scrape.product_name = ""
+
+    
+
+    # global product_name 
+
+     
 
 
     flask_env = get_flask_env()
@@ -197,18 +214,45 @@ def scrape():
     # the command to start app.py, would be: flask run --host 0.0.0.
     # command.append(python_command)
     
-    i = 0
+    # i = 0
 
-    if i == 0:
-        # command.append("cd")
-        # command.append("webapp")
-        # monitor = subprocess.Popen(command, env=flask_env)
-        # atexit.register(teardown, monitor)
+    # if i == 0:
+    # command.append("cd")
+    # command.append("webapp")
+    # monitor = subprocess.Popen(command, env=flask_env)
+    # atexit.register(teardown, monitor)
+    # @copy_current_request_context
+    
+    # def fun():
+    # with app.request_context(environ):
+    form = ScrapingForm()
+    # from flask import request
+    if request.method == "POST":
+        # scrape.product_name = request.form.get("product_name")
+        product_name = request.form['product_name']
+        id = np.random.random()
+        now = datetime.now()
+        date = now.strftime("%d/%m/%Y %H:%M:%S")
+        # product_name = scrape.product_name
+        session['product_name'] = request.form["product_name"]
+        # session['product_name'] = request.form.get("product_name")
+
+
+
+        cursor = mysql.connection.cursor()
+        cursor.execute('INSERT INTO product VALUES(%s,%s,%s)',(id,product_name,date))
+        mysql.connection.commit()
+        cursor.close()
+
         command.append("scrapy")
         command.append("runspider")
         command.append("jumiaSpider.py")
         monitor = subprocess.Popen(command, env=flask_env)
         atexit.register(teardown, monitor)
+    
+    # threading.Thread(target=fun).start()
+
+            # thread.start_new_thread(handle_sub_view, (request))
         
         cmd.append("scrapy")
         cmd.append("runspider")
@@ -217,11 +261,14 @@ def scrape():
         atexit.register(teardown, cmdmonitor)
 
 
-    # return redirect(url_for('registration'))
+        # return redirect(url_for('pro'))
 
-    return render_template('progressbar.html'), {"Refresh": "3; url=home"}
+    return render_template('progressbar.html',title="progress",p=session['product_name'])
+    # return render_template('progressbarV2.html',title="progress",product_name=product_name), {"Refresh": "3; url=home"}
 
-
+# with app.app_context():
+#     # scrape()
+#     product = session['product_name']
 
 
 @app.route('/pro')

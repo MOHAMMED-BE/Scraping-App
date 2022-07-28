@@ -1,17 +1,72 @@
-from itertools import product
+# from crypt import methods
+# from itertools import product
 import json
+# from flask import request, session
 import scrapy
-from datetime import date
+# from datetime import date
 # from productTracker.items import ProductesItem
-from scrapy.loader import ItemLoader
+# from scrapy.loader import ItemLoader
+# import requests
+# from forms import ScrapingForm
 
-class GetPriceSpider(scrapy.Spider):
+# from App import product
+# from classes.Functions import getProduct
+# from App import app,mysql
+
+from jumiaSpider import query
+
+# from classes.Function import getProduct
+
+
+
+class amazon(scrapy.Spider ):
     name = 'amazon'
-    cols = ["Title","Price"]
+
+    # def getProduct():
+    #     with app.app_context():
+    #         cursor = mysql.connection.cursor()
+    #         cursor.execute('SELECT name from product order by date desc LIMIT 1')
+    #         # product = get_results(cursor)
+
+    #         product = cursor.fetchall()
+    #         # res = product
+    #         # res = str(res)
+        
+    #         query = str(product)
+
+    #     char_to_replace = {
+    #             ',': '',
+    #             '(' : '',
+    #             ')' : '',
+    #             '\'': ''}
+
+    #     def getQuery(text):
+    #         for key, value in char_to_replace.items():
+    #             text = text.replace(key, value)
+    #         return str(text)
+
+    #     query = getQuery(query)
+    #     return query
+
+    query = query
+    # query = "iPhone 13 pro max"
+
+    # form = ScrapingForm()
+    # if request.method == "POST":
+    #     if form.validate_on_submit():
+    #         product_name = request.form["product_name"]
+
 
     
-    def __init__(self, query="iPhone 13 pro max", *args, **kwargs):
+    def __init__(self, query=query, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        # if "product_name" in session:
+        #     query = session['product_name']
+
+        # pro = requests.sessions()
+
+        # query = pro['product_name']
 
         self.base_url = "https://www.amazon.com"
         self.search_url = "https://www.amazon.com/s?k={query}"
@@ -25,6 +80,8 @@ class GetPriceSpider(scrapy.Spider):
         )]
 
     def parse(self, response):
+
+
         
         # search_results = response.css("div.s-result-item "
         #                               "h2 > a > span::text").getall()

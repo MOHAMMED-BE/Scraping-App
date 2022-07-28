@@ -1,32 +1,89 @@
-from itertools import product
+# from crypt import methods
+# import imp
+# from itertools import product
 import json
-from requests import request
+# from flask_mysqldb import MySQL
+# from requests import request
+# import requests
 import scrapy
-from datetime import date
-from scrapy.loader import ItemLoader
-from os import path
-from flask import request
-from scrapy.crawler import CrawlerProcess
+# from datetime import datetime
+# from scrapy.loader import ItemLoader
+# from os import path
+# from flask import appcontext_popped, appcontext_pushed, appcontext_tearing_down, request, session
+# from scrapy.crawler import CrawlerProcess
+# from classes.dotDict import dotdict
+# from  flask_session import Session
+# from App import scrape
+# from App import get_results,mysql
+# mysql = MySQL(app)
+
+# from flask_wtf import FlaskForm
+# from forms import ScrapingForm
+
 # from .webapp.app import varx
 # from __future__ import unicode_literals
 # from App import insert 
  
 # from .webapp.app import varx
 
+# from App import product
 
-
+# from App import app,mysql
 # from webapp import app
+from classes.Functions import getProduct
+
+query = getProduct()
+
 
 class jumia(scrapy.Spider):
     name = 'jumia'
     # varx = 'redmi note 11 S'
 
+
+
     
-    def __init__(self, query="iPhone 13 pro max", *args, **kwargs):
+
+    # # with app.app_context():
+    # product_name= session["product_name"]
+
+    
+
+    
+   
+    
+    
+    def __init__(self, query=query, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # query = jumia.varx
+        # with app.app_context():
+        #     form = ScrapingForm()
+        #     if request.method == "POST":
+        #         if form.validate_on_submit():
+        #             product_name = request.form["product_name"]
+
+        # pro = requests.sessions()
+
+        # query = pro['product_name']
+
+
+        # with appcontext_tearing_down.test_request_context():
+        # if "product_name" in session:
+        #     query = session['product_name']
+        # query = product
+
         # query = app.scrape.varx
+
+        
+            # product = cursor.fetchall()
+        
+        # for i in product:
+        #     product_name = i.name
+        #     if i >1:
+        #         break
+        #     # query = product_name
+    # productName = str(product)
+        
+
 
         self.base_url = "https://www.jumia.ma"
         self.search_url = "https://www.jumia.ma/catalog/?q={query}"
@@ -40,6 +97,19 @@ class jumia(scrapy.Spider):
         )]
 
     def parse(self, response):
+
+        # with app.app_context():
+        #     cursor = mysql.connection.cursor()
+        #     cursor.execute('SELECT name from product LIMIT 1')
+        #     # product = get_results(cursor)
+
+        #     product = cursor.fetchall()
+
+        #     res = product
+
+        #     re = str(res)
+
+            # for i in product
 
         yield scrapy.Request(str(self.start_urls))
         
