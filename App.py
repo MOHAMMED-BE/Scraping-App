@@ -263,8 +263,8 @@ def scrape():
 
         # return redirect(url_for('pro'))
 
-    return render_template('progressbar.html',title="progress",p=session['product_name'])
-    # return render_template('progressbarV2.html',title="progress",product_name=product_name), {"Refresh": "3; url=home"}
+    # return render_template('progressbarV3.html' , title='progressV1')
+    return render_template('progressbarV3.html',title="progress"), {"Refresh": "5; url=home"}
 
 # with app.app_context():
 #     # scrape()
@@ -275,8 +275,8 @@ def scrape():
 def pro():
 
 
-    return render_template('progressbar.html' , title='progress')
-
+    return render_template('progressbarV3.html' , title='progressV1')
+    
 
 
 
