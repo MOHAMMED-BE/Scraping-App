@@ -1,72 +1,15 @@
-# from crypt import methods
-# from itertools import product
 import json
-# from flask import request, session
 import scrapy
-# from datetime import date
-# from productTracker.items import ProductesItem
-# from scrapy.loader import ItemLoader
-# import requests
-# from forms import ScrapingForm
-
-# from App import product
-# from classes.Functions import getProduct
-# from App import app,mysql
-
 from jumiaSpider import query
-
-# from classes.Function import getProduct
-
 
 
 class amazon(scrapy.Spider ):
     name = 'amazon'
-
-    # def getProduct():
-    #     with app.app_context():
-    #         cursor = mysql.connection.cursor()
-    #         cursor.execute('SELECT name from product order by date desc LIMIT 1')
-    #         # product = get_results(cursor)
-
-    #         product = cursor.fetchall()
-    #         # res = product
-    #         # res = str(res)
-        
-    #         query = str(product)
-
-    #     char_to_replace = {
-    #             ',': '',
-    #             '(' : '',
-    #             ')' : '',
-    #             '\'': ''}
-
-    #     def getQuery(text):
-    #         for key, value in char_to_replace.items():
-    #             text = text.replace(key, value)
-    #         return str(text)
-
-    #     query = getQuery(query)
-    #     return query
-
     query = query
-    # query = "iPhone 13 pro max"
-
-    # form = ScrapingForm()
-    # if request.method == "POST":
-    #     if form.validate_on_submit():
-    #         product_name = request.form["product_name"]
-
-
+    
     
     def __init__(self, query=query, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        # if "product_name" in session:
-        #     query = session['product_name']
-
-        # pro = requests.sessions()
-
-        # query = pro['product_name']
 
         self.base_url = "https://www.amazon.com"
         self.search_url = "https://www.amazon.com/s?k={query}"
@@ -88,8 +31,8 @@ class amazon(scrapy.Spider ):
         yield scrapy.Request(str(self.start_urls))
 
 
-        # if title in search_results:
-        #     page_pos = ( search_results.index(title) + 1 )
+        # if name in search_results:
+        #     page_pos = ( search_results.index(name) + 1 )
         #     self.rank = (self.page_num - 1) * 48 + page_pos
 
         # else:
@@ -100,11 +43,14 @@ class amazon(scrapy.Spider ):
 
         products = response.css("div.s-result-item")
 
-        title = products.css("div.s-card-container > div.a-section div.a-section > div.a-section > h2 > a > span.a-text-normal::text").getall()
+        name = products.css("div.s-card-container > div.a-section div.a-section > div.a-section > h2 > a > span.a-text-normal::text").getall()
         price = products.css("div.a-section span.a-price span.a-price-whole::text").getall()
-        # title = title.replace(',','')
+        # name = name.replace(',','')
+
+
+        
         data[self.query] = {
-            'title':title,
+            'name':name,
             'price':price
         }
 
@@ -133,8 +79,8 @@ class amazon(scrapy.Spider ):
         # for product in products:
 
             # loader = ItemLoader(item=ProductesItem(),selector=product)
-            # loader.add_css('title',"div.s-card-container > div.a-section div.a-section > div.a-section > h2 > a > span.a-text-normal::text")
-            # # loader.add_css('title',".a-text-normal::text")
+            # loader.add_css('name',"div.s-card-container > div.a-section div.a-section > div.a-section > h2 > a > span.a-text-normal::text")
+            # # loader.add_css('name',".a-text-normal::text")
             # loader.add_css('price',"div.a-section span.a-price span.a-price-whole::text")
             # # loader.add_css('price',"div.a-section > div > div > div > div.a-section > div.a-row span.a-price span.a-price-whole::text")
             

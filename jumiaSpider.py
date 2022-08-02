@@ -2,6 +2,7 @@
 # import imp
 # from itertools import product
 import json
+from flask import session
 # from flask_mysqldb import MySQL
 # from requests import request
 # import requests
@@ -29,10 +30,10 @@ import scrapy
 # from App import product
 
 # from App import app,mysql
-# from webapp import app
-from classes.Functions import getProduct
+# from app import app
+from classes.Functions import getJumiaProducts
 
-query = getProduct()
+query = getJumiaProducts()
 
 
 class jumia(scrapy.Spider):
@@ -113,24 +114,27 @@ class jumia(scrapy.Spider):
 
         yield scrapy.Request(str(self.start_urls))
         
-        self.page_num += 1
 
         data = {}
         
         products = response.css("div.-paxs")
 
-        title = products.css("article.prd > a.core > div.info > h3.name::text").getall()
+        name = products.css("article.prd > a.core > div.info > h3.name::text").getall()
         price = products.css("article.prd > a.core > div.info > div.prc::text").getall()
         oldPrice = products.css("article.prd > a.core > div.info > div.s-prc-w div.old::text").getall()
+        image = products.css("article.prd > a.core > div.img-c > img::attr(data-src)").get()
         
         data[self.query] = {
-            'title':title,
-            'price':price,
-            'oldPrice':oldPrice
+        'name':name,
+        'price':price,
+        'oldPrice':oldPrice,
+        'image':image
         }
+
+
         # yield data
 
-        # prix = {}
+        # price = {}
 
         # filename = 'jumiaprice.json'
         # filename = 'D:\STAGE-LP\Flask-Scraping-App\Flask_Scraping_App\Flask_Scraping_App\spiders\jumiaprice.json'
@@ -196,7 +200,7 @@ class jumia(scrapy.Spider):
 # class jumia(scrapy.Spider):
 #     name = 'jumia'
 #     varx = 'redmi note 11 pro 5G'
-#     # cols = ["Title","Price","oldPrice"]
+#     # cols = ["name","Price","oldPrice"]
 #     # start_urls = ["https://www.jumia.ma"]
 #     # start_urls = ["https://www.jumia.ma/catalog/?q=iphone+13+pro+max"]
 #     # start_urls = ["https://www.jumia.ma/catalog/?q=iPhone+13+pro+max&page=5#catalog-listing"]
@@ -226,8 +230,8 @@ class jumia(scrapy.Spider):
 #         #                               "h2 > a > span::text").getall()
 
 
-#         # if title in search_results:
-#         #     page_pos = ( search_results.index(title) + 1 )
+#         # if name in search_results:
+#         #     page_pos = ( search_results.index(name) + 1 )
 #         #     self.rank = (self.page_num - 1) * 48 + page_pos
 
 #         # else:
@@ -244,28 +248,28 @@ class jumia(scrapy.Spider):
 #         # for product in products:
 #         #     # loader = ItemLoader(item=jumiaItem())
 #         #     loader = ItemLoader(item=jumiaItem(),selector=product)
-#         #     loader.add_css('title',"article.prd > a.core > div.info > h3.name::text")
+#         #     loader.add_css('name',"article.prd > a.core > div.info > h3.name::text")
 #         #     loader.add_css('price',"article.prd > a.core > div.info > div.prc::text")
 #         #     loader.add_css('oldPrice',"article.prd > a.core > div.info > div.s-prc-w div.old::text")
             
-#         #     # loader.add_value('title',product.css("article.prd > a.core > div.info > h3.name::text").getall())
+#         #     # loader.add_value('name',product.css("article.prd > a.core > div.info > h3.name::text").getall())
 #         #     # loader.add_value('price',product.css("article.prd > a.core > div.info > div.prc::text").getall())
 #         #     # loader.add_value('oldPrice',product.css("article.prd > a.core > div.info > div.s-prc-w div.old::text").getall())
 
 #         #     yield loader.load_item()
 
-#         title = products.css("article.prd > a.core > div.info > h3.name::text").getall()
+#         name = products.css("article.prd > a.core > div.info > h3.name::text").getall()
 #         price = products.css("article.prd > a.core > div.info > div.prc::text").getall()
 #         oldPrice = products.css("article.prd > a.core > div.info > div.s-prc-w div.old::text").getall()
         
 #         data[self.query] = {
-#             'title':title,
+#             'name':name,
 #             'price':price,
 #             'oldPrice':oldPrice
 #         }
 #         # yield data
 
-#         # prix = {}
+#         # price = {}
 
 #         # filename = 'jumiaprice.json'
 #         # filename = 'D:\STAGE-LP\Flask-Scraping-App\Flask_Scraping_App\Flask_Scraping_App\spiders\jumiaprice.json'
@@ -287,7 +291,7 @@ class jumia(scrapy.Spider):
 #             json.dump(listObj, json_file)
 
 #         # for i in data['iphone 13 pro max']:
-#         #     print(i['title'])
+#         #     print(i['name'])
 
 #         # with open("tracke.json","w") as file:
 #         #     file.writelines()

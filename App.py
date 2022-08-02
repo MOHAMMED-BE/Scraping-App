@@ -20,8 +20,9 @@ from forms import LoginForm, RegistrationForm,ScrapingForm
 # from scrapy.crawler import CrawlerProcess
 from  flask_session import Session
 import numpy as np
-from jumiaSpider import *
+# from jumiaSpider import getJumiaProducts as getJumiaProducts
 app = Flask(__name__)
+
 
 
 app.config['MYSQL_HOST'] = 'localhost'
@@ -29,16 +30,26 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = '' #nfakira
 app.config['MYSQL_DB'] = 'FlaskAppDB'
 
-app.config["SESSION_PERMANENT"] = False
+# app.config["SESSION_PERMANENT"] = False
+# app.config["SESSION_TYPE"] = "memcached"
 app.config["SESSION_TYPE"] = "filesystem"
+app.secret_key = "9adda8bf738de307aea09ba4faebcb19140a6223"
 
-Session(app)
+# Session(app)
+sess = Session()
+sess.init_app(app)
 mysql = MySQL(app)
 
 
-app.config['SECRET_KEY'] = '9adda8bf738de307aea09ba4faebcb19140a6223'
+# app.config['SECRET_KEY'] = '9adda8bf738de307aea09ba4faebcb19140a6223'
 
-data ={}
+
+jumiaData  = {}
+amazonData = {}
+jumiaNameList  = []
+jumiaPriceList = []
+jumiaImageList = []
+
 
 def get_results(db_cursor):
     desc = [d[0] for d in db_cursor.description]
@@ -52,49 +63,58 @@ def get_results(db_cursor):
 @app.route("/")
 @app.route("/home")
 def home():
+    from classes.Functions import getJumiaProducts,getPriceFromJumia
+
     form = ScrapingForm()
 
     # filename = os.path.join(app.static_folder, 'data/data.json')
-    with open("jumiaDataScraping.json","r") as file:
-        data = json.load(file)
+    with open("jumiaDataScraping.json","r") as jumiaFile:
+        jumiaData = json.load(jumiaFile)
+    
+    with open("amazonDataScraping.json","r") as amazonFile:
+        amazonData = json.load(amazonFile)
 
-    priceList = []
 
-    char_to_replace = {
-                    ','  : '',
-                    ' '  : '',
-                    '.00': '',
-                    'Dhs': ''}
+    JumiaProducts = getJumiaProducts()
 
-    def getPriceFromJumia(arg):
-        for key, value in char_to_replace.items():
-            arg = arg.replace(key, value)
-        return float(arg)
-    prod = getProduct()
-    for i in data[prod]['price']:
+    
+    
+    for i in jumiaData[JumiaProducts]['name']:
+        jumiaNameList.append(i)
+        
+    
+    # for i,j in zip(jumiaData[JumiaProducts]['price'],range(5)):
+    #     i = getPriceFromJumia(i)
+    #     maxValue = i
+    #     jumiaPriceList.append(i)
+    #     if j == 0:
+    #         break
+
+    for i in jumiaData[JumiaProducts]['price']:
         i = getPriceFromJumia(i)
-        priceList.append(i)
+        jumiaPriceList.append(i)
 
-    # priceList = list(map(lambda x: x.replace(',', ''), priceList))
+    for i in jumiaData[JumiaProducts]['image']:
+        jumiaImageList.append(i)
 
-    prix = max(priceList)
+    # jumiaPriceList = list(map(lambda x: x.replace(',', ''), jumiaPriceList))
 
-    cursor = mysql.connection.cursor()
-    cursor.execute('select * from courses')
-    courses = get_results(cursor)
-    # courses = cursor.fetchall()
-    cursor.close()
-    cursor = mysql.connection.cursor()
-    cursor.execute('select * from lessons')
-    lessons = get_results(cursor)
+    name = jumiaNameList[0]
+    price = jumiaPriceList[0]
+    image = jumiaImageList[0]
+    # price = max(jumiaPriceList)
+
+    # lessons = get_results(cursor)
     # lessons = cursor.fetchall()
-    cursor.close()
 
     return render_template("home.html", title="BMS SCRIPER" ,
-    lessons=lessons, courses=courses , 
-    data = data[prod],
-    price = priceList,
-    prix = prix,form=form
+    jumiaData = jumiaData[JumiaProducts],
+    jumiaNameList = jumiaNameList,
+    # price = jumiaPriceList,
+    image = jumiaImageList,
+    name = JumiaProducts,
+    price = price,
+    form=form
     )
 
 @app.route("/about")
@@ -169,22 +189,11 @@ def insert():
 #  Scraping
 # ---------------------------------------------------
 
-def get_flask_env():
-    flask_env = os.environ.copy()
-    if "FLASK_APP" not in flask_env:
-        flask_env["env"] = "./app.py"
-    if "FLASK_ENV" not in flask_env:
-        flask_env["FLASK_ENV"] = "development"
-    return flask_env
-
-
-def teardown(process_handle):
-    process_handle.terminate() #kill the sub process clean
-    process_handle.wait()# wait for graceful exit.
 
 # product_name = ""
 @app.route('/scrape' , methods=['POST','GET'])
 def scrape():
+    from classes.Functions import get_flask_env, teardown
 
     # from jumia import jumia
 
@@ -209,8 +218,6 @@ def scrape():
 
 
     flask_env = get_flask_env()
-    command = []
-    cmd = []
     # the command to start app.py, would be: flask run --host 0.0.0.
     # command.append(python_command)
     
@@ -225,46 +232,59 @@ def scrape():
     
     # def fun():
     # with app.request_context(environ):
-    form = ScrapingForm()
+    # form = ScrapingForm()
     # from flask import request
     if request.method == "POST":
         # scrape.product_name = request.form.get("product_name")
         product_name = request.form['product_name']
         id = np.random.random()
-        now = datetime.now()
-        date = now.strftime("%d/%m/%Y %H:%M:%S")
+        # now = datetime.now()
+        date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         # product_name = scrape.product_name
-        session['product_name'] = request.form["product_name"]
-        # session['product_name'] = request.form.get("product_name")
-
-
-
+        session['product_name'] = request.form.get("product_name")
         cursor = mysql.connection.cursor()
-        cursor.execute('INSERT INTO product VALUES(%s,%s,%s)',(id,product_name,date))
+        cursor.execute('INSERT INTO product VALUES(%s,%s,%s,%s,%s)',(id,product_name,"img","user",date))
+        # cursor.execute('INSERT INTO product VALUES(%s,%s,%s,%s,%s)',(id,product_name,"img","user",date))
         mysql.connection.commit()
         cursor.close()
 
-        command.append("scrapy")
-        command.append("runspider")
-        command.append("jumiaSpider.py")
-        monitor = subprocess.Popen(command, env=flask_env)
-        atexit.register(teardown, monitor)
-    
-    # threading.Thread(target=fun).start()
 
-            # thread.start_new_thread(handle_sub_view, (request))
-        
-        cmd.append("scrapy")
-        cmd.append("runspider")
-        cmd.append("amazonSpider.py")
-        cmdmonitor = subprocess.Popen(cmd, env=flask_env)
-        atexit.register(teardown, cmdmonitor)
+        def run():
+            command = []
+            command.append("scrapy")
+            command.append("runspider")
+            command.append("usdToMad.py")
+            monitor = subprocess.Popen(command, env=flask_env)
+            atexit.register(teardown, monitor)
+
+            command = []
+            command.append("scrapy")
+            command.append("runspider")
+            command.append("jumiaSpider.py")
+            monitor = subprocess.Popen(command, env=flask_env)
+            atexit.register(teardown, monitor)
+
+            command = []
+            command.append("scrapy")
+            command.append("runspider")
+            command.append("amazonSpider.py")
+            monitor = subprocess.Popen(command, env=flask_env)
+            atexit.register(teardown, monitor)
+
+        run()
+
+        def delete():
+            cursor = mysql.connection.cursor()
+            cursor.execute('delete from product where name = %s',(product_name,))
+            mysql.connection.commit()
+            cursor.close()
+
 
 
         # return redirect(url_for('pro'))
 
     # return render_template('progressbarV3.html' , title='progressV1')
-    return render_template('progressbarV3.html',title="progress"), {"Refresh": "5; url=home"}
+    return render_template('progressbarV3.html',title="progress"), {"Refresh": "10; url=home"}
 
 # with app.app_context():
 #     # scrape()

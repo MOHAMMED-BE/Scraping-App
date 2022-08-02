@@ -9,8 +9,8 @@
         <nav
           class="navbar navbar-expand-lg blur border-radius-xl position-absolute my-3 top-0 border-bottom py-3 z-index-3 shadow my-3 py-2 start-0 end-0 mx-4">
           <div class="container">
-            <a class="navbar-brand" href="https://demos.creative-tim.com/material-kit-pro/index" rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom" target="_blank">
-              BMS SCRIPER
+            <a class="navbar-brand text-darker  fz-1" href="home" rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom"> <!-- target="_blank" -->
+              BMS-Scraper
             </a>
             
             <a href="register" class="btn btn-sm  bg-gradient-primary  btn-round mb-0 ms-auto d-lg-none d-block">Sign In</a>
@@ -25,7 +25,7 @@
             <div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0" id="navigation">
               <ul class="navbar-nav navbar-nav-hover mx-auto">
                 <li class="nav-item mx-2">
-                  <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" role="button">
+                  <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-darker" role="button">
                     Home
                   </a>
                 </li>
@@ -64,12 +64,12 @@
   </div>
 <!-- -------- START HEADER 1 w/ text and image on right ------- -->
 <header>
-  <div class="page-header min-vh-100" style="background-image: url(/static/assets/img/homeimg.jpg);" loading="lazy">
+  <div class="page-header min-vh-100" style="background-image: url(/static/assets/img/bg-0.png);" loading="lazy">
     <span class="mask bg-gradient-dark opacity-5"></span>
     <div class="container">
       <div class="row">
         <div class="col-lg-6 col-md-7 d-flex justify-content-center flex-column">
-          <h1 class="text-white mb-4">Material Kit</h1>
+          <h1 class="text-white mb-4" style="letter-spacing: 1px;">BMS-Scraper</h1>
           <p class="text-white opacity-8 lead pe-5 me-5">The time is now for it be okay to be great. People in this world shun people for being nice. </p>
           <div class="buttons">
             <button type="button" class="btn btn-white mt-4"><a href="register">Get Started</a></button>
@@ -131,44 +131,50 @@
             </tr> -->
             <thead class="text-light text-center">
               <tr>
-                <th class="ps-2">
-                  <h6 class="mb-0">Web Site</h6>
+                <th class="text-center">
+                  <h5 class="font-weight-bolder fz-3 text-darker mb-0">Image</h5>
                 </th>
                 <th class="text-center">
-                  <h5 class="font-weight-bolder text-darker mb-0">$39</h5>
+                  <h5 class="font-weight-bolder fz-3 text-darker mb-0">Name</h5>
                 </th>
                 <th class="text-center">
-                  <h5 class="font-weight-bolder text-darker mb-0">$79</h5>
+                  <h5 class="font-weight-bolder fz-3 text-darker mb-0">Jumia Price</h5>
                 </th>
                 <th class="text-center">
-                  <h5 class="font-weight-bolder text-darker mb-0">$99</h5>
+                  <h5 class="font-weight-bolder fz-3 text-darker mb-0">Amazon Price</h5>
+                </th>
+                <th class="text-center">
+                  <h5 class="font-weight-bolder fz-3 text-darker mb-0">Scraping Date</h5>
                 </th>
               </tr>
             </thead>
             <tbody>
-              {% for i in price %}
-              <tr>
+              {% for i in jumiaData %}
+              <tr class="text-center">
                 <td>
                     <div class="d-flex px-2">
                       <div>
-                        <img src="../static/assets/img/amazonlogo.png" class="avatar avatar-sm rounded-circle me-2">
-                      </div>
-                      <div class="my-auto">
-                        <h6 class="mb-0 text-xs">Invision</h6>
+                        <img src="{{jumiaData.image}}" class="avatar rounded me-2">
                       </div>
                     </div>
                   </td>
                 <td class="py-3">
-                  <span class="text-xs">{{prix}}{{price}}</span>
+                  <span class="text-xs">{{price}}</span>
+                </td>
+                <td class="text-center text-xs py-3">
+                  {{name}}
                 </td>
                 <td class="text-center py-3">
-                  <i class="fas fa-check text-success text-xs"></i>
+                  <span class="text-xs">{{price}}</span>
                 </td>
                 <td class="text-center py-3">
-                  <i class="fas fa-check text-success text-xs"></i>
+                  <span class="text-xs">{{price}}</span>
                 </td>
+
                 <td class="text-center py-3">
-                  <i class="fas fa-check text-success text-xs"></i>
+                  <form role="form text-start" method="post" action="{{url_for('scrape')}}">
+                      <button  class="btn btn-outline-danger mt-3" name="btn-delete">Delete</button>
+                  </form>
                 </td>
               </tr>
               {% endfor%}

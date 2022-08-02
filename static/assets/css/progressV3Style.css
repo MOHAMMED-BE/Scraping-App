@@ -85,7 +85,7 @@ body{
 	stroke-width: 20px;
 	stroke-dasharray: 450;
 	stroke-dashoffset: 450;
-	animation: anim 4.5s linear forwards 
+	animation: anim 5.9s linear forwards 
  }
 
  @keyframes anim{
