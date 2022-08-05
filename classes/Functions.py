@@ -38,14 +38,8 @@ def teardown(process_handle):
     process_handle.terminate() 
     process_handle.wait()
 
-def delete():
-    cursor = mysql.connection.cursor()
-    cursor.execute('delete from search')
-    mysql.connection.commit()
-    cursor.close()
 
-
-def addToProduct():
+def insertProduct():
     with open("jumiaDataScraping.json","r") as jumiaFile:
         jumiaData = json.load(jumiaFile)
     
@@ -55,19 +49,21 @@ def addToProduct():
     with open("currencyScrapingData.json","r") as currencyFile:
         currencyData = json.load(currencyFile)
 
-    scrapingDate = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     if session['product_name']:
         name  = session['product_name']
 
-    jumiaPrice =  jumiaData['price']
-    jumiaPrice = getPriceFromJumia(jumiaPrice)
+    image        = jumiaData['image']
+    username     = session['username']
 
-    currency    = currencyData['currency']['currency']
-    amazonPrice = amazonData['price']
-    amazonPrice =  amazonPrice * currency
+    jumiaPrice   = jumiaData['price']
+    jumiaPrice   = getPriceFromJumia(jumiaPrice)
 
-    image    = jumiaData['image']
-    username = session['username']
+    currency     = currencyData['currency']['currency']
+    amazonPrice  = amazonData['price']
+    amazonPrice  = amazonPrice * currency
+
+    scrapingDate = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
 
 
     cursor = mysql.connection.cursor()

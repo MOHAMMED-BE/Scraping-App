@@ -42,7 +42,6 @@ def get_results(db_cursor):
 @app.route("/")
 @app.route("/home")
 def home():
-    from classes.Functions import getProductName,getPriceFromJumia,delete
 
     form = ScrapingForm()
     FormDelete = deleteProductForm()
@@ -177,14 +176,14 @@ def scraping():
 
             run()
            
-    return render_template('progressbar.html'), {"Refresh": "6; url=addToProduct"}
+    return render_template('progressbar.html'), {"Refresh": "6; url=insertProducts"}
 
 
-@app.route('/addToProduct' )
-def addToProduct():
+@app.route('/insertProducts' )
+def insertProducts():
 
-    from classes.Functions import addToProduct
-    addToProduct()
+    from classes.Functions import insertProduct
+    insertProduct()
 
     return redirect(url_for('home'))
 

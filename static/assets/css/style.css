@@ -11,3 +11,8 @@ body{
     font-family: 'Varela Round', sans-serif !important;
 
 }
+
+.row{
+  box-shadow: 0 0px 25px -2px rgb(0 0 0 / 10%),
+  0 4px 7px -6px rgb(0 0 0 / 5%) !important;
+}
