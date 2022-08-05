@@ -13,46 +13,18 @@
               BMS-Scraper
             </a>
             
-            <a href="register" class="btn btn-sm  bg-gradient-primary  btn-round mb-0 ms-auto d-lg-none d-block">Sign In</a>
-            
-            <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon mt-2">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </span>
-            </button>
+            <a href="register" class="btn btn-sm  bg-gradient-primary  btn-round mb-0 ms-auto d-lg-none d-block">Log In</a>
+        
             <div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0" id="navigation">
-              <ul class="navbar-nav navbar-nav-hover mx-auto">
-                <li class="nav-item mx-2">
-                  <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-darker" role="button">
-                    Home
-                  </a>
-                </li>
-  
-                <li class="nav-item mx-2">
-                  <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" role="button">
-                    Account
-                  </a>
-                </li>
-                <li class="nav-item mx-2">
-                  <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" role="button">
-                    Blocks
-                  </a>
-                </li>
-  
-                <li class="nav-item mx-2">
-                  <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center">
-                    Docs
-                  </a>
-                </li>
-              </ul>
+              <ul class="navbar-nav navbar-nav-hover mx-auto"></ul>
   
               <ul class="navbar-nav d-lg-block d-none">
                 <li class="nav-item">
-                  
-                  <a href="register" class="btn btn-sm  bg-gradient-primary  mb-0 me-1" role="button">Sign Up</a>
-                  
+              {% if session['username'] %}
+                  <a href="logout" class="btn btn-sm  bg-gradient-primary  mb-0 me-1" role="button">Log Out</a>
+              {% else %}
+                  <a href="login" class="btn btn-sm  bg-gradient-primary  mb-0 me-1" role="button">Log In</a>
+              {% endif %}
                 </li>
               </ul>
             </div>
@@ -64,15 +36,15 @@
   </div>
 <!-- -------- START HEADER 1 w/ text and image on right ------- -->
 <header>
-  <div class="page-header min-vh-100" style="background-image: url(/static/assets/img/bg-0.png);" loading="lazy">
+  <div class="page-header min-vh-100" style="background-image: url(/static/assets/img/web.jpg);" loading="lazy">
     <span class="mask bg-gradient-dark opacity-5"></span>
     <div class="container">
       <div class="row">
         <div class="col-lg-6 col-md-7 d-flex justify-content-center flex-column">
           <h1 class="text-white mb-4" style="letter-spacing: 1px;">BMS-Scraper</h1>
-          <p class="text-white opacity-8 lead pe-5 me-5">The time is now for it be okay to be great. People in this world shun people for being nice. </p>
+          <p class="text-white opacity-8 lead pe-5 me-5">Getting data about products from websites is very difficult, try our scraper to make it easy.</p>
           <div class="buttons">
-            <button type="button" class="btn btn-white mt-4"><a href="register">Get Started</a></button>
+            <button type="button" class="btn btn-white mt-4"><a href="#scraping">Get Started</a></button>
           </div>
         </div>
       </div>
@@ -86,10 +58,10 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 text-center">
-        <h2 class="text-gradient text-primary text-center">Compare Features</h2>
-        <p class="lead mb-5">Join the world&#39;s largest developer community</p>
+        <h2 class="text-gradient text-primary text-center fs-3 text-capitalize">Start Scraping Products from jumia and amazon</h2>
+        <p id="scraping" class="lead mb-5 fs-6">For good results, please enter the full title of product or add a few details about it</p>
       </div>
-      <form role="form text-start" method="post" action="{{url_for('scrape')}}">
+      <form role="form text-start" method="post" action="{{url_for('scraping')}}">
         {{form.hidden_tag()}}
         <div class="input-group input-group-outline mb-3">
           <!-- {{form.product_name.label(class='form-label')}} -->
@@ -105,30 +77,15 @@
           {% else %} 
           {{ form.product_name(class='form-control form-control-lg')}} 
           {% endif %}
-          <!-- <label class="form-label">First Name</label>
-          <input type="text" class="form-control"> -->
       </div>
       {{form.submit(class='btn bg-gradient-primary mt-3 btn-Scraping')}}
-    <!-- <button  class="btn bg-gradient-primary mt-3 btn-Scraping" name="btn-Scraping">Start Scraping Data</button> -->
   </form>
-      <div class="col-lg-10">
+  {% if products %}
+      <div class="col-lg-12">
 
         <div class="table-responsive">
           
           <table class="table table-pricing">
-            <!-- button group -->
-            <!-- <tr>
-              
-              <span class="border-bottom-0"></span>
-              <span class="text-center align-items-center border-bottom-0">
-                <form action="{{url_for('scrape')}}" method="POST">
-                  <button  class="btn bg-gradient-primary mt-3 btn-Scraping" name="btn-Scraping">Start Scraping Data</button>
-                </form>
-              </span>
-              <span class="text-center align-items-center border-bottom-0">
-                <a href="javascript:;" class="btn bg-gradient-primary mt-3">Choose Plan</a>
-              </span>
-            </tr> -->
             <thead class="text-light text-center">
               <tr>
                 <th class="text-center">
@@ -146,35 +103,36 @@
                 <th class="text-center">
                   <h5 class="font-weight-bolder fz-3 text-darker mb-0">Scraping Date</h5>
                 </th>
+                <th class="text-center">
+                  <h5 class="font-weight-bolder fz-3 text-darker mb-0">Delete</h5>
+                </th>
               </tr>
             </thead>
             <tbody>
-              {% for i in jumiaData %}
+              {% for product in products %}
               <tr class="text-center">
                 <td>
                     <div class="d-flex px-2">
                       <div>
-                        <img src="{{jumiaData.image}}" class="avatar rounded me-2">
+                        <img src="{{product.image}}" class="avatar rounded me-2">
                       </div>
                     </div>
                   </td>
                 <td class="py-3">
-                  <span class="text-xs">{{price}}</span>
-                </td>
-                <td class="text-center text-xs py-3">
-                  {{name}}
+                  <span class="text-xs">{{product.name}}</span>
                 </td>
                 <td class="text-center py-3">
-                  <span class="text-xs">{{price}}</span>
+                  <span class="text-xs">{{product.jumiaPrice}}</span>
                 </td>
                 <td class="text-center py-3">
-                  <span class="text-xs">{{price}}</span>
+                  <span class="text-xs">{{product.amazonPrice}}</span>
+                </td>
+                <td class="text-center py-3">
+                  <span class="text-xs">{{product.scrapingDate}}</span>
                 </td>
 
                 <td class="text-center py-3">
-                  <form role="form text-start" method="post" action="{{url_for('scrape')}}">
-                      <button  class="btn btn-outline-danger mt-3" name="btn-delete">Delete</button>
-                  </form>
+                      <a href="/deleteProduct/{{product.id}}" class="btn btn-outline-danger mt-3">Delete</a>
                 </td>
               </tr>
               {% endfor%}
@@ -183,25 +141,19 @@
           </table>
         </div>
       </div>
+      {% endif %}
     </div>
   </div>
 </section>
 
 <!-- ---- START FOOTER 4 dark w/ 2 cols ---- -->
 <footer class="footer py-4 my-11 bg-gradient-dark mb-0">
-  <div class="container">
+  <div class="container d-flex justify-content-center">
     <div class="row">
-      <div class="col-lg-4 col-md-2 text-start my-auto">
+      <div class="col-lg-12 col-md-10 col-sm-12 text-start my-auto text-center">
         <p class="mb-0 text-white text-sm">
-          Copyright © <script>document.write(new Date().getFullYear())</script> Material Design by Creative Tim.
+          Copyright © <script>document.write(new Date().getFullYear())</script> BMS-Scraper by Ben-seghir Mohammed.
         </p>
-      </div>
-      <div class="col-lg-5 col-md-8 ms-auto text-end">
-        <ul class="nav flex-row ms-n3 align-items-center mt-4 mt-sm-0">
-          <li class="nav-item ms-auto">
-            <button type="button" class="btn bg-gradient-info mb-0 ms-3 ms-sm-0 mt-3 mt-sm-0">Get in Touch</button>
-          </li>
-        </ul>
       </div>
     </div>
   </div>
@@ -211,83 +163,3 @@
 
 {% endblock content%}
 
-
-<!-- 
-
-    <section class="bg-dark text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start">
-    <div class="container">
-        <div class="d-sm-flex align-items-center justify-content-between">
-            <div>
-                <h1 class="mb-10"> Learn <span class="text-warning"> To Code</span></h1>
-                <p class="lead my-4">
-                    We focus on teaching programming in an intuitive and easy to follow way. All you need is
-                    dedication!
-                </p>
-                <a class="btn btn-danger btn-lg border"
-                    href="https://www.youtube.com/channel/UCEsvQ6d7qsnOSNXtccIzScQ?sub_confirmation=1" target="_blank">
-                    <i class="bi bi-youtube m-3"></i>Subscribe
-                </a>
-
-            </div>
-            <img class="img-fluid w-50 d-none d-sm-block" src="{{url_for('static', filename='showcase.svg')}}" alt="">
-        </div>
-    </div>
-</section>
-Social Media
-<section class="bg-primary text-light p-5">
-    <div class="container">
-        <div class="d-md-flex justify-content-between align-items-center">
-            <h3 class="mb-3 text-center">Join Our Community</h3>
-            <nav class="navbar navbar-expand-lg navbar-dark">
-                <button class="navbar-toggler border" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#socialbtn">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="socialbtn">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="btn btn-dark ms-5 button_width" href="https://github.com/omar-ghoneim"
-                                target="_blank">
-                                <i class="bi-github" role="img"></i>
-                                GitHub
-                            </a>
-                        </li>
-                        <li>
-                            <a class="btn btn-dark ms-5 button_width" href="https://www.facebook.com/Pythonic88"
-                                target="_blank">
-                                <i class="bi bi-facebook "></i>
-                                Facebook
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a type="button" class="btn btn-dark ms-5 button_width"
-                                href="https://www.instagram.com/pythonic_88" target="_blank">
-                                <i class="bi bi-instagram"></i>
-                                Instagram
-                            </a>
-
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-dark ms-5 button_width" href="https://twitter.com/Pythonic88"
-                                target="_blank">
-                                <i class="bi bi-twitter"></i>
-                                Twitter
-                            </a>
-
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-dark ms-5 button_width" href="https://www.tiktok.com/@pythonic88"
-                                target="_blank">
-                                <i class="bi bi-tiktok"></i>
-                                TikTok
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-
-    </div>
-    </div>
-</section>
- -->

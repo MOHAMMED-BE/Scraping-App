@@ -49,10 +49,8 @@
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: , 128, 154;
   --bs-body-bg-rgb: 255, 255, 255;
-  --bs-font-sans-serif: "Roboto", Helvetica, Arial, sans-serif;
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-  --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
@@ -89,7 +87,6 @@
 
 body {
   margin: 0;
-  font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
@@ -290,7 +287,6 @@ pre,
 code,
 kbd,
 samp {
-  font-family: var(--bs-font-monospace);
   font-size: 1em;
 }
 
@@ -387,7 +383,6 @@ select,
 optgroup,
 textarea {
   margin: 0;
-  font-family: inherit;
   font-size: inherit;
   line-height: inherit;
 }
@@ -3581,7 +3576,6 @@ textarea.form-control.is-invalid {
 .btn {
   --bs-btn-padding-x: 1.5rem;
   --bs-btn-padding-y: 0.625rem;
-  --bs-btn-font-family: ;
   --bs-btn-font-size: 0.75rem;
   --bs-btn-font-weight: 700;
   --bs-btn-line-height: 1.667;
@@ -3595,7 +3589,6 @@ textarea.form-control.is-invalid {
   --bs-btn-focus-box-shadow: 0 0 0 0.2rem rgba(var(--bs-btn-focus-shadow-rgb), .5);
   display: inline-block;
   padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
-  font-family: var(--bs-btn-font-family);
   font-size: var(--bs-btn-font-size);
   font-weight: var(--bs-btn-font-weight);
   line-height: var(--bs-btn-line-height);
@@ -6721,7 +6714,6 @@ fieldset:disabled .btn {
   display: block;
   padding: var(--bs-tooltip-arrow-height);
   margin: var(--bs-tooltip-margin);
-  font-family: var(--bs-font-sans-serif);
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -6846,7 +6838,6 @@ fieldset:disabled .btn {
   z-index: var(--bs-popover-zindex);
   display: block;
   max-width: var(--bs-popover-max-width);
-  font-family: var(--bs-font-sans-serif);
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -10382,10 +10373,6 @@ fieldset:disabled .btn {
 
 .gap-12 {
   gap: 16rem !important;
-}
-
-.font-monospace {
-  font-family: var(--bs-font-monospace) !important;
 }
 
 .fs-1 {
@@ -20996,7 +20983,6 @@ fieldset:disabled .btn {
 }
 
 .card .card-body {
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
   padding: 1.5rem;
 }
 
@@ -21669,7 +21655,6 @@ body.dark-version {
   }
 
   .dropdown .dropdown-menu:before {
-    font-family: "FontAwesome";
     content: "\f0d8";
     position: absolute;
     top: 0;
@@ -21705,7 +21690,6 @@ body.dark-version {
   }
 
   .navbar-toggler+.navbar-collapse .dropdown:not(.nav-item) .dropdown-menu:before {
-    font-family: "FontAwesome";
     content: "\f0d8";
     position: absolute;
     top: 0;
@@ -21751,7 +21735,6 @@ body.dark-version {
   }
 
   .dropdown .dropdown-menu:before {
-    font-family: "FontAwesome";
     content: "\f0d8";
     position: absolute;
     top: 0;
@@ -21890,7 +21873,6 @@ body.dark-version {
 }
 
 .dropup .dropdown-menu:after {
-  font-family: "FontAwesome";
   content: "\f0d7";
   position: absolute;
   z-index: -1;
@@ -22330,7 +22312,6 @@ body.dark-version {
 
 .form-check:not(.form-switch) .form-check-input[type="checkbox"]:after {
   transition: opacity 0.25s ease-in-out;
-  font-family: "FontAwesome";
   content: "\f00c";
   width: 100%;
   height: 100%;
@@ -22628,7 +22609,6 @@ label,
 }
 
 .material-icons {
-  font-family: 'Material Icons Round';
   font-weight: normal;
   font-style: normal;
   font-size: 20px;
@@ -24299,7 +24279,6 @@ body:not(.dark-version) .sidenav.bg-transparent .collapse .nav-item .nav-link.ac
   font-variant: normal;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
-  font-family: 'Font Awesome 5 Free';
   font-weight: 700;
   content: "\f107";
   margin-left: auto;
@@ -25795,7 +25774,7 @@ h3,
 .h3,
 .h3 {
   font-weight: 600;
-  font-family: "Roboto Slab", sans-serif;
+  
 }
 
 h4,
@@ -25872,13 +25851,7 @@ p {
   font-weight: 300;
 }
 
-.text-sans-serif {
-  font-family: "Roboto", Helvetica, Arial, sans-serif !important;
-}
 
-.text-monospace {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
-}
 
 .text-justify {
   text-align: justify !important;
@@ -26071,7 +26044,7 @@ p {
   -ms-touch-action: manipulation;
   touch-action: manipulation;
   background: #fff;
-  -webkit-box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   transform: scale(0.95) !important;
 }
 
@@ -26426,7 +26399,6 @@ p {
 }
 
 .flatpickr-current-month span.cur-month {
-  font-family: inherit;
   font-weight: 700;
   color: inherit;
   display: inline-block;
@@ -26462,7 +26434,6 @@ p {
   margin: 0;
   display: inline-block;
   font-size: inherit;
-  font-family: inherit;
   font-weight: 300;
   line-height: inherit;
   height: auto;
@@ -26495,7 +26466,6 @@ p {
   color: inherit;
   cursor: pointer;
   font-size: inherit;
-  font-family: inherit;
   font-weight: 300;
   height: auto;
   line-height: inherit;
@@ -27192,10 +27162,9 @@ span.flatpickr-weekday {
   background: #fff;
   cursor: default;
   box-shadow: inset 0 0 1px #fff, inset 0 1px 7px #EBEBEB, 0 3px 6px -3px #BBB;
-  webkit-transition: .3s ease 0s;
+  transition: .3s ease 0s;
   -moz-transition: .3s ease 0s;
   -ms-transition: .3s ease 0s;
-  -o-transform: .3s ease 0s;
   transition: .3s ease 0s;
 }
 
@@ -27382,7 +27351,6 @@ pre[class*="language-"] {
   color: black;
   background: none;
   text-shadow: 0 1px white;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   font-size: 1em;
   text-align: left;
   white-space: pre;

@@ -5,10 +5,6 @@ from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo
 
 
 class RegistrationForm(FlaskForm):
-    fname = StringField(
-        "First Name", validators=[DataRequired(), Length(min=2, max=25)]
-    )
-    lname = StringField("Last Name", validators=[DataRequired(), Length(min=2, max=25)])
     username = StringField(
         "Username", validators=[DataRequired(), Length(min=2, max=25)]
     )
@@ -18,7 +14,7 @@ class RegistrationForm(FlaskForm):
         validators=[
             DataRequired(),
             Regexp(
-                "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,32}$"
+                "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,32}$"
             ),
         ],
     )
@@ -33,10 +29,16 @@ class LoginForm(FlaskForm):
             DataRequired(),
         ],
     )
-    # remember = BooleanField("Remember Me")
     submit = SubmitField("Log In")
 
 
 class ScrapingForm(FlaskForm):
-    product_name = StringField("product_name", validators=[DataRequired()])
+    product_name = StringField("product_name",
+    validators=[DataRequired(),
+    Regexp(
+            "^[A-Za-z\d]{2,50}$"
+        )])
     submit = SubmitField("start scraping data")
+
+class deleteProductForm(FlaskForm):
+    submit = SubmitField("delete")

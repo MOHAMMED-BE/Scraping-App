@@ -1,41 +1,101 @@
-.container {
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+@font-face{
+    font-family: 'Varela Round'; src:url(/static/assets/font-familly/VarelaRound-Regular.ttf);
+}
+
+body{
+    font-family: 'Varela Round', sans-serif;
+	height: 100vh;
+	background-image: url(../img/web.jpg);
+	background-size: cover;
+}
+
+.skill{
+	height: 160px;
+	width: 160px;
+	position: relative;
+	z-index: 1;
+}
+
+.outer{
+	height: 160px;
+	width: 160px;
+	padding: 20px;
+	box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
+	-6px -6px 10px -1px rgba(255, 255, 255, 0.7) ;
+	border-radius: 50%;
+}
+
+.inner{
+	height: 120px;
+	width: 120px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, 0.2),
+	inset -4px -4px 6px -1px rgba(255, 255, 255, 0.7),
+	 -0.5px -0.5px 0px rgba(255, 255, 255, 1),
+	 0.5px 0.5px 0px rgba(0, 0, 0, 0.15),
+	 0px 12px 10px -10px rgba(0, 0, 0, 0.05);
+
+}
+
+
+.text{
+	text-transform: capitalize;
+	position: absolute;
+	font-size: 25px;
+	font-weight: 600;
+	color: #fff;
+	margin: -17rem 0 0 0;
+	text-align: center;
+	z-index: 1;
+ }
+
+ .container{
+	height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+ }
+
+ .opacity{
+	width: 100%;
     height: 100vh;
-    width: 100%;
-  }
-  
-  .progress-bar__container {
-    width: 80%;
-    height: 2rem;
-    border-radius: 2rem;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.5s;
-    will-change: transform;
-    box-shadow: 0 0 5px #e76f51;
-  }
-  
-  .progress-bar {
+    background-color: #000;
+    opacity: 0.7;
     position: absolute;
-    height: 100%;
-    width: 100%;
-    content: "";
-    background-color: #e76f51;
-    top:0;
-    bottom: 0;
-    left: -100%;
-    border-radius: inherit;
-    display: flex;
-    justify-content: center;
-    align-items:center;
-    color: white;
-    font-family: sans-serif;
-  }
-  
-  .progress-bar__text {
-    display: none;
-  }
-  
-  
+ }
+
+ #number{
+	font-weight: 600;
+	color: #FFF;
+	font-size: 25px;
+ }
+
+ circle{
+	fill: none;
+	stroke: url(#GradientColor);
+	stroke-width: 20px;
+	stroke-dasharray: 450;
+	stroke-dashoffset: 450;
+	animation: anim 5.9s linear forwards 
+ }
+
+ @keyframes anim{
+	100%{
+		stroke-dashoffset: 0;
+	}
+ }
+
+ svg{
+	position: absolute;
+	top: 0;
+	left: 0;
+ }
