@@ -4,7 +4,6 @@ from classes.Functions import getProductName
 
 ProductName = getProductName()
 
-
 class jumia(scrapy.Spider):
     name = 'jumia'
     

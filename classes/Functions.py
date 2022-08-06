@@ -40,6 +40,7 @@ def teardown(process_handle):
 
 
 def insertProduct():
+
     with open("jumiaDataScraping.json","r") as jumiaFile:
         jumiaData = json.load(jumiaFile)
     
@@ -63,8 +64,6 @@ def insertProduct():
     amazonPrice  = amazonPrice * currency
 
     scrapingDate = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-
-
 
     cursor = mysql.connection.cursor()
     cursor.execute('INSERT INTO products(name,image,username,jumiaPrice,amazonPrice,scrapingDate) VALUES(%s,%s,%s,%s,%s,%s)',(name,image,username,jumiaPrice,amazonPrice,scrapingDate,))

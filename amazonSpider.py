@@ -2,7 +2,6 @@ import json
 import scrapy
 from jumiaSpider import ProductName
 
-
 class amazon(scrapy.Spider ):
     name = 'amazon'
     

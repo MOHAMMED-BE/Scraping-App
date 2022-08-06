@@ -46,8 +46,6 @@ def home():
     form = ScrapingForm()
     FormDelete = deleteProductForm()
     
-    # for i,j in zip(jumiaData[JumiaProducts]['price'],range(5)):
-
     products = ""
     if session.get("username") != None:
         username = session['username']
@@ -202,7 +200,7 @@ def deleteProduct(productId):
 
 @app.route('/logout')
 def logout():
-    session['username'] = NULL
+    session['username'] = None
     return redirect(url_for('home'))
 
 
