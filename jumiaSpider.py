@@ -11,7 +11,7 @@ class jumia(scrapy.Spider):
         super().__init__(*args, **kwargs)
 
         self.base_url = "https://www.jumia.ma"
-        self.search_url = "https://www.jumia.ma/catalog/?q={query}"
+        self.search_url = "https://www.jumia.ma/catalog/?q={query}&sort=rating#catalog-listing"
 
         self.query = query
 

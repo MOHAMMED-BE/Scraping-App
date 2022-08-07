@@ -41,6 +41,8 @@ def teardown(process_handle):
 
 def insertProduct():
 
+    productName = getProductName()
+
     with open("jumiaDataScraping.json","r") as jumiaFile:
         jumiaData = json.load(jumiaFile)
     
@@ -50,14 +52,23 @@ def insertProduct():
     with open("currencyScrapingData.json","r") as currencyFile:
         currencyData = json.load(currencyFile)
 
+    productNameFromJson = jumiaData['name']
+
     if session['product_name']:
-        name  = session['product_name']
+        if productName.lower() in productNameFromJson.lower():
+            product_name  = session['product_name']
+        else:
+            product_name = "Product Not Found"
 
     image        = jumiaData['image']
     username     = session['username']
 
     jumiaPrice   = jumiaData['price']
-    jumiaPrice   = getPriceFromJumia(jumiaPrice)
+
+    if product_name == "Product Not Found":
+        jumiaPrice = 0
+    else:
+        jumiaPrice   = getPriceFromJumia(jumiaPrice)
 
     currency     = currencyData['currency']['currency']
     amazonPrice  = amazonData['price']
@@ -66,6 +77,6 @@ def insertProduct():
     scrapingDate = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
     cursor = mysql.connection.cursor()
-    cursor.execute('INSERT INTO products(name,image,username,jumiaPrice,amazonPrice,scrapingDate) VALUES(%s,%s,%s,%s,%s,%s)',(name,image,username,jumiaPrice,amazonPrice,scrapingDate,))
+    cursor.execute('INSERT INTO products(name,image,username,jumiaPrice,amazonPrice,scrapingDate) VALUES(%s,%s,%s,%s,%s,%s)',(product_name,image,username,jumiaPrice,amazonPrice,scrapingDate,))
     mysql.connection.commit()
     cursor.close()

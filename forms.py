@@ -1,7 +1,6 @@
-from tokenize import String
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, Length, Email, Regexp
 
 
 class RegistrationForm(FlaskForm):
@@ -9,13 +8,11 @@ class RegistrationForm(FlaskForm):
         "Username", validators=[DataRequired(), Length(min=2, max=25)]
     )
     email = StringField("Email", validators=[DataRequired(), Email()])
+
     password = PasswordField(
         "Password",
         validators=[
-            DataRequired(),
-            Regexp(
-                "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,32}$"
-            ),
+            DataRequired()
         ],
     )
     submit = SubmitField("Sign Up")
@@ -26,7 +23,7 @@ class LoginForm(FlaskForm):
     password = PasswordField(
         "Password",
         validators=[
-            DataRequired(),
+            DataRequired()
         ],
     )
     submit = SubmitField("Log In")

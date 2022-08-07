@@ -5,7 +5,7 @@
 }
 
 @font-face{
-    font-family: 'Varela Round'; src:url(/static/assets/font-familly/VarelaRound-Regular.ttf);
+    font-family: 'Varela Round'; src:url(/static/assets/fonts/VarelaRound-Regular.ttf);
 }
 
 body{
@@ -85,7 +85,7 @@ body{
 	stroke-width: 20px;
 	stroke-dasharray: 450;
 	stroke-dashoffset: 450;
-	animation: anim 5.9s linear forwards 
+	animation: anim 6.3s linear forwards 
  }
 
  @keyframes anim{
