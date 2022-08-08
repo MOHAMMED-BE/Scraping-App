@@ -52,29 +52,34 @@ def insertProduct():
     with open("currencyScrapingData.json","r") as currencyFile:
         currencyData = json.load(currencyFile)
 
-    productNameFromJson = jumiaData['name']
+    productNameFromJumia   = jumiaData['name']
+    productNameFromAmazon = amazonData['name']
 
-    if session['product_name']:
-        if productName.lower() in productNameFromJson.lower():
-            product_name  = session['product_name']
-        else:
-            product_name = "Product Not Found"
-
-    image        = jumiaData['image']
+    product_name  = session['product_name']
     username     = session['username']
 
     jumiaPrice   = jumiaData['price']
 
-    if product_name == "Product Not Found":
-        jumiaPrice = 0
-    else:
-        jumiaPrice   = getPriceFromJumia(jumiaPrice)
+    if session['product_name']:
+        if productName.lower() in productNameFromJumia.lower():
+            jumiaPrice   = getPriceFromJumia(jumiaPrice)
+        else:
+            jumiaPrice = 0
 
-    currency     = currencyData['currency']['currency']
-    amazonPrice  = amazonData['price']
-    amazonPrice  = amazonPrice * currency
+        if productName.lower() in productNameFromAmazon.lower():
+            currency     = currencyData['currency']['currency']
+            amazonPrice  = amazonData['price']
+            amazonPrice  = amazonPrice * currency
+        else:
+            amazonPrice = 0
 
-    scrapingDate = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        if productName.lower() in productNameFromJumia.lower() or productName.lower() in productNameFromAmazon.lower():
+            image  = jumiaData['image']
+        else:
+            image = "../static/assets/img/notfound.png"
+        
+
+    scrapingDate = datetime.now().strftime("%d/%m/%Y %H:%M")
 
     cursor = mysql.connection.cursor()
     cursor.execute('INSERT INTO products(name,image,username,jumiaPrice,amazonPrice,scrapingDate) VALUES(%s,%s,%s,%s,%s,%s)',(product_name,image,username,jumiaPrice,amazonPrice,scrapingDate,))

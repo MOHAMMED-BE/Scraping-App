@@ -10,7 +10,7 @@
           class="navbar navbar-expand-lg blur border-radius-xl position-absolute my-3 top-0 border-bottom py-3 z-index-3 shadow my-3 py-2 start-0 end-0 mx-4">
           <div class="container">
             <a class="navbar-brand text-darker  fz-1" href="home" rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom"> <!-- target="_blank" -->
-              BMS-Scraper
+              PRO SCRAPER
             </a>
 
             {% if session['username'] != None %}
@@ -35,7 +35,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 col-md-7 d-flex justify-content-center flex-column">
-          <h1 class="text-white mb-4" style="letter-spacing: 1px;">BMS-Scraper</h1>
+          <h1 class="text-white mb-4" style="letter-spacing: 1px;">PRO SCRAPER</h1>
           <p class="text-white opacity-8 lead pe-5 me-5">Getting data about products from websites is very difficult, try our scraper to make it easy.</p>
           <div class="buttons">
             <a href="#scraping" class="btn btn-white mt-4">Get Started</a>
@@ -115,10 +115,18 @@
                   <span class="text-xs">{{product.name}}</span>
                 </td>
                 <td class="text-center py-3">
+                  {% if product.jumiaPrice == 0 %}
+                  <span class="text-xs">Not Found</span>
+                  {% else %}
                   <span class="text-xs">{{product.jumiaPrice}} <span class="text-dark">DH</span></span>
+                  {% endif %}
                 </td>
                 <td class="text-center py-3">
+                  {% if product.amazonPrice == 0 %}
+                  <span class="text-xs">Not Found</span>
+                  {% else %}
                   <span class="text-xs">{{product.amazonPrice}} <span class="text-dark">DH</span></span>
+                  {% endif %}
                 </td>
                 <td class="text-center py-3">
                   <span class="text-xs">{{product.scrapingDate}}</span>
@@ -146,7 +154,7 @@
     <div class="row">
       <div class="col-lg-12 col-md-10 col-sm-12 text-start my-auto text-center">
         <p class="mb-0 text-white text-sm">
-          Copyright © <script>document.write(new Date().getFullYear())</script> BMS-Scraper by Ben-seghir Mohammed.
+          Copyright © <script>document.write(new Date().getFullYear())</script> PRO SCRAPER by BEN-SEGHIR MOHAMMED
         </p>
       </div>
     </div>

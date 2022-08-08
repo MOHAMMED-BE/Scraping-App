@@ -1,0 +1,6 @@
+DB Name : flaskappdb
+
+
+for test try login with:
+	email : user@user.com
+	password : user

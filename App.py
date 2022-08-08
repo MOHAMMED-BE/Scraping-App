@@ -51,7 +51,7 @@ def home():
         products = get_results(cursor)
 
 
-    return render_template("home.html", title="BMS SCRIPER" ,
+    return render_template("home.html", title="PRO SCRAPER" ,
     products = products,
     form=form,
     FormDelete =FormDelete
